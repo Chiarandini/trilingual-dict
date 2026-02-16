@@ -3,7 +3,7 @@ package ranker
 import (
 	"sort"
 
-	"github.com/trilingual-dict/core/types"
+	"github.com/Chiarandini/trilingual-dict/core/types"
 )
 
 // RankJapanese sorts Japanese words by priority and returns the top result

@@ -3,8 +3,6 @@ package database
 import (
 	"database/sql"
 	"fmt"
-
-	_ "github.com/mattn/go-sqlite3"
 )
 
 // DB wraps the SQLite connection
@@ -13,8 +11,9 @@ type DB struct {
 }
 
 // Open creates a new database connection
+// The driver name is set via build tags (db_native.go or db_wasm.go)
 func Open(path string) (*DB, error) {
-	conn, err := sql.Open("sqlite3", path)
+	conn, err := sql.Open(driverName, path)
 	if err != nil {
 		return nil, fmt.Errorf("failed to open database: %w", err)
 	}

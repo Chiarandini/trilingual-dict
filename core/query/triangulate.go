@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/trilingual-dict/core/database"
-	"github.com/trilingual-dict/core/detector"
-	"github.com/trilingual-dict/core/ranker"
-	"github.com/trilingual-dict/core/types"
+	"github.com/Chiarandini/trilingual-dict/core/database"
+	"github.com/Chiarandini/trilingual-dict/core/detector"
+	"github.com/Chiarandini/trilingual-dict/core/ranker"
+	"github.com/Chiarandini/trilingual-dict/core/types"
 )
 
 // Query performs triangular translation lookup

@@ -6,8 +6,8 @@ import (
 	"encoding/json"
 	"syscall/js"
 
-	"github.com/trilingual-dict/core/database"
-	"github.com/trilingual-dict/core/query"
+	"github.com/Chiarandini/trilingual-dict/core/database"
+	"github.com/Chiarandini/trilingual-dict/core/query"
 )
 
 var db *database.DB

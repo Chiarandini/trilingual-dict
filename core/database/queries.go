@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/trilingual-dict/core/types"
+	"github.com/Chiarandini/trilingual-dict/core/types"
 )
 
 // QueryJapanese searches for Japanese words by headword or reading

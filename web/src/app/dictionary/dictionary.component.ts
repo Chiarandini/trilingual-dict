@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { WasmLoaderService, DictionaryResponse, LanguageOutput } from '../services/wasm-loader.service';
+import { DictionaryService, DictionaryResponse, LanguageOutput } from '../services/dictionary.service';
 import { AudioService } from '../services/audio.service';
 
 @Component({
@@ -21,16 +21,16 @@ export class DictionaryComponent implements OnInit {
   chineseOutput: LanguageOutput | null = null;
 
   constructor(
-    private wasmLoader: WasmLoaderService,
+    private dictionaryService: DictionaryService,
     private audioService: AudioService
   ) {}
 
   async ngOnInit() {
     this.loading = true;
     try {
-      await this.wasmLoader.initialize();
+      await this.dictionaryService.initialize();
     } catch (err) {
-      this.error = 'Failed to load dictionary module';
+      this.error = 'Failed to load dictionary database';
       console.error(err);
     } finally {
       this.loading = false;
@@ -48,7 +48,7 @@ export class DictionaryComponent implements OnInit {
     this.chineseOutput = null;
 
     try {
-      this.result = this.wasmLoader.search(this.searchQuery);
+      this.result = this.dictionaryService.search(this.searchQuery);
 
       if (this.result) {
         // Separate outputs by language

@@ -1,10 +1,10 @@
-module github.com/trilingual-dict/cmd/dict
+module github.com/Chiarandini/trilingual-dict/cmd/dict
 
 go 1.21
 
-replace github.com/trilingual-dict/core => ../../core
+replace github.com/Chiarandini/trilingual-dict/core => ../../core
 
-require github.com/trilingual-dict/core v0.0.0
+require github.com/Chiarandini/trilingual-dict/core v0.0.0
 
 require github.com/charmbracelet/lipgloss v0.9.1
 

@@ -8,9 +8,9 @@ import (
 	"strings"
 
 	"github.com/charmbracelet/lipgloss"
-	"github.com/trilingual-dict/core/database"
-	"github.com/trilingual-dict/core/query"
-	"github.com/trilingual-dict/core/types"
+	"github.com/Chiarandini/trilingual-dict/core/database"
+	"github.com/Chiarandini/trilingual-dict/core/query"
+	"github.com/Chiarandini/trilingual-dict/core/types"
 )
 
 var (
