@@ -1,0 +1,114 @@
+<div class="dictionary-container">
+  <div class="search-section">
+    <h1>Trilingual Dictionary</h1>
+    <div class="search-bar">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        (keypress)="onKeyPress($event)"
+        placeholder="Search in English, Japanese, or Chinese..."
+        [disabled]="loading"
+        class="search-input"
+      />
+      <button (click)="search()" [disabled]="loading || !searchQuery.trim()" class="search-button">
+        Search
+      </button>
+    </div>
+
+    <div *ngIf="loading" class="loading">
+      Loading...
+    </div>
+
+    <div *ngIf="error" class="error">
+      {{ error }}
+    </div>
+  </div>
+
+  <div class="results-section" *ngIf="result && !loading">
+    <div class="results-grid">
+      <!-- Japanese Card -->
+      <div class="result-card" *ngIf="japaneseOutput">
+        <div class="card-header">
+          <h2>Japanese</h2>
+          <button
+            *ngIf="japaneseOutput.audio"
+            (click)="playAudio(japaneseOutput)"
+            class="audio-button"
+            title="Play audio"
+          >
+            🔊
+          </button>
+        </div>
+
+        <div class="headword">
+          {{ japaneseOutput.headword }}
+          <span class="reading" *ngIf="japaneseOutput.reading">
+            ({{ japaneseOutput.reading }})
+          </span>
+        </div>
+
+        <div class="definition">
+          {{ japaneseOutput.definition }}
+        </div>
+
+        <div class="metadata" *ngIf="getMetadata(japaneseOutput).length > 0">
+          <span *ngFor="let item of getMetadata(japaneseOutput)" class="meta-item">
+            {{ item }}
+          </span>
+        </div>
+
+        <div class="examples" *ngIf="japaneseOutput.examples && japaneseOutput.examples.length > 0">
+          <h3>Examples</h3>
+          <div *ngFor="let example of japaneseOutput.examples" class="example">
+            <div class="example-source">{{ example.source_text }}</div>
+            <div class="example-translation">{{ example.english_text }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chinese Card -->
+      <div class="result-card" *ngIf="chineseOutput">
+        <div class="card-header">
+          <h2>Chinese</h2>
+          <button
+            *ngIf="chineseOutput.audio"
+            (click)="playAudio(chineseOutput)"
+            class="audio-button"
+            title="Play audio"
+          >
+            🔊
+          </button>
+        </div>
+
+        <div class="headword">
+          {{ chineseOutput.headword }}
+          <span class="reading" *ngIf="chineseOutput.reading">
+            ({{ chineseOutput.reading }})
+          </span>
+        </div>
+
+        <div class="definition">
+          {{ chineseOutput.definition }}
+        </div>
+
+        <div class="metadata" *ngIf="getMetadata(chineseOutput).length > 0">
+          <span *ngFor="let item of getMetadata(chineseOutput)" class="meta-item">
+            {{ item }}
+          </span>
+        </div>
+
+        <div class="examples" *ngIf="chineseOutput.examples && chineseOutput.examples.length > 0">
+          <h3>Examples</h3>
+          <div *ngFor="let example of chineseOutput.examples" class="example">
+            <div class="example-source">{{ example.source_text }}</div>
+            <div class="example-translation">{{ example.english_text }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!japaneseOutput && !chineseOutput" class="no-results">
+      No results found for "{{ searchQuery }}"
+    </div>
+  </div>
+</div>

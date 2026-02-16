@@ -1,0 +1,67 @@
+# Compiled binaries
+cmd/dict/dict
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Go
+*.test
+*.out
+go.work
+vendor/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+venv/
+env/
+
+# Data sources (large files)
+data/sources/
+*.gz
+*.zip
+
+# Database (if too large)
+# dictionary.db  # Uncomment if database is large
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# WASM
+wasm/main.wasm
+wasm/*.wasm
+
+# Web/Angular
+web/node_modules/
+web/dist/
+web/.angular/
+web/src/assets/main.wasm
+web/src/assets/wasm_exec.js
+web/src/assets/dictionary.db
+
+# iOS
+ios/TriDict.xcodeproj/project.xcworkspace/
+ios/TriDict.xcodeproj/xcuserdata/
+ios/DerivedData/
+ios/build/
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
