@@ -24,6 +24,7 @@ env/
 
 # Data sources (large files)
 data/sources/
+data/tatoeba/
 *.gz
 *.zip
 
