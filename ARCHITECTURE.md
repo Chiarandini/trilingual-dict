@@ -50,7 +50,7 @@ core/
 **Algorithm:**
 ```go
 if containsKana(input) → Japanese
-if isASCII(input)      → English
+if is ASCII(input)      → English
 if hasCJK(input)       → Ambiguous (try both JA/ZH)
 ```
 
