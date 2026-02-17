@@ -1,0 +1,333 @@
+website-nate/nate-website on  archive [✘!?⇡] via  v22.1.0 on ☁️  (us-east-1)
+❯ ng serve
+✔ Browser application bundle generation complete.
+
+Initial Chunk Files   | Names         |  Raw Size
+vendor.js             | vendor        |   4.47 MB |
+main.js               | main          | 761.64 kB |
+styles.css, styles.js | styles        | 550.48 kB |
+polyfills.js          | polyfills     | 234.34 kB |
+runtime.js            | runtime       |   8.34 kB |
+
+                      | Initial Total |   5.99 MB
+
+Build at: 2026-02-17T02:50:26.618Z - Hash: 6e7ed6c3c40a437d - Time: 3555ms
+
+Error: src/app/services/dictionary.service.ts:233:17 - error TS4111: Property 'id' comes from an index signature, so it must be accessed with ['id'].
+
+233         id: row.id as number,
+                    ~~
+
+
+Error: src/app/services/dictionary.service.ts:234:23 - error TS4111: Property 'headword' comes from an index signature, so it must be accessed with ['headword'].
+
+234         headword: row.headword as string,
+                          ~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:235:22 - error TS4111: Property 'reading' comes from an index signature, so it must be accessed with ['reading'].
+
+235         reading: row.reading as string,
+                         ~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:236:24 - error TS4111: Property 'is_common' comes from an index signature, so it must be accessed with ['is_common'].
+
+236         is_common: row.is_common === 1,
+                           ~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:237:29 - error TS4111: Property 'frequency_rank' comes from an index signature, so it must be accessed with ['frequency_rank'].
+
+237         frequency_rank: row.frequency_rank as number | null,
+                                ~~~~~~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:238:25 - error TS4111: Property 'jlpt_level' comes from an index signature, so it must be accessed with ['jlpt_level'].
+
+238         jlpt_level: row.jlpt_level as string | null,
+                            ~~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:239:27 - error TS4111: Property 'stroke_count' comes from an index signature, so it must be accessed with ['stroke_count'].
+
+239         stroke_count: row.stroke_count as number | null,
+                              ~~~~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:240:25 - error TS4111: Property 'components' comes from an index signature, so it must be accessed with ['components'].
+
+240         components: row.components as string | null,
+                            ~~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:241:25 - error TS4111: Property 'stroke_svg' comes from an index signature, so it must be accessed with ['stroke_svg'].
+
+241         stroke_svg: row.stroke_svg as string | null,
+                            ~~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:242:54 - error TS4111: Property 'id' comes from an index signature, so it must be accessed with ['id'].
+
+242         definitions: this.getJapaneseDefinitions(row.id as number),
+                                                         ~~
+
+
+Error: src/app/services/dictionary.service.ts:243:46 - error TS4111: Property 'id' comes from an index signature, so it must be accessed with ['id'].
+
+243         examples: this.getExamples('ja', row.id as number)
+                                                 ~~
+
+
+Error: src/app/services/dictionary.service.ts:279:17 - error TS4111: Property 'id' comes from an index signature, so it must be accessed with ['id'].
+
+279         id: row.id as number,
+                    ~~
+
+
+Error: src/app/services/dictionary.service.ts:280:23 - error TS4111: Property 'headword' comes from an index signature, so it must be accessed with ['headword'].
+
+280         headword: row.headword as string,
+                          ~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:281:22 - error TS4111: Property 'reading' comes from an index signature, so it must be accessed with ['reading'].
+
+281         reading: row.reading as string,
+                         ~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:282:24 - error TS4111: Property 'is_common' comes from an index signature, so it must be accessed with ['is_common'].
+
+282         is_common: row.is_common === 1,
+                           ~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:283:29 - error TS4111: Property 'frequency_rank' comes from an index signature, so it must be accessed with ['frequency_rank'].
+
+283         frequency_rank: row.frequency_rank as number | null,
+                                ~~~~~~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:284:25 - error TS4111: Property 'jlpt_level' comes from an index signature, so it must be accessed with ['jlpt_level'].
+
+284         jlpt_level: row.jlpt_level as string | null,
+                            ~~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:285:27 - error TS4111: Property 'stroke_count' comes from an index signature, so it must be accessed with ['stroke_count'].
+
+285         stroke_count: row.stroke_count as number | null,
+                              ~~~~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:286:25 - error TS4111: Property 'components' comes from an index signature, so it must be accessed with ['components'].
+
+286         components: row.components as string | null,
+                            ~~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:287:25 - error TS4111: Property 'stroke_svg' comes from an index signature, so it must be accessed with ['stroke_svg'].
+
+287         stroke_svg: row.stroke_svg as string | null,
+                            ~~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:288:54 - error TS4111: Property 'id' comes from an index signature, so it must be accessed with ['id'].
+
+288         definitions: this.getJapaneseDefinitions(row.id as number),
+                                                         ~~
+
+
+Error: src/app/services/dictionary.service.ts:289:46 - error TS4111: Property 'id' comes from an index signature, so it must be accessed with ['id'].
+
+289         examples: this.getExamples('ja', row.id as number)
+                                                 ~~
+
+
+Error: src/app/services/dictionary.service.ts:311:17 - error TS4111: Property 'id' comes from an index signature, so it must be accessed with ['id'].
+
+311         id: row.id as number,
+                    ~~
+
+
+Error: src/app/services/dictionary.service.ts:312:25 - error TS4111: Property 'simplified' comes from an index signature, so it must be accessed with ['simplified'].
+
+312         simplified: row.simplified as string,
+                            ~~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:313:26 - error TS4111: Property 'traditional' comes from an index signature, so it must be accessed with ['traditional'].
+
+313         traditional: row.traditional as string,
+                             ~~~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:314:21 - error TS4111: Property 'pinyin' comes from an index signature, so it must be accessed with ['pinyin'].
+
+314         pinyin: row.pinyin as string,
+                        ~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:315:24 - error TS4111: Property 'is_common' comes from an index signature, so it must be accessed with ['is_common'].
+
+315         is_common: row.is_common === 1,
+                           ~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:316:29 - error TS4111: Property 'frequency_rank' comes from an index signature, so it must be accessed with ['frequency_rank'].
+
+316         frequency_rank: row.frequency_rank as number | null,
+                                ~~~~~~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:317:24 - error TS4111: Property 'hsk_level' comes from an index signature, so it must be accessed with ['hsk_level'].
+
+317         hsk_level: row.hsk_level as string | null,
+                           ~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:318:27 - error TS4111: Property 'stroke_count' comes from an index signature, so it must be accessed with ['stroke_count'].
+
+318         stroke_count: row.stroke_count as number | null,
+                              ~~~~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:319:25 - error TS4111: Property 'components' comes from an index signature, so it must be accessed with ['components'].
+
+319         components: row.components as string | null,
+                            ~~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:320:28 - error TS4111: Property 'decomposition' comes from an index signature, so it must be accessed with ['decomposition'].
+
+320         decomposition: row.decomposition as string | null,
+                               ~~~~~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:321:25 - error TS4111: Property 'stroke_svg' comes from an index signature, so it must be accessed with ['stroke_svg'].
+
+321         stroke_svg: row.stroke_svg as string | null,
+                            ~~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:322:53 - error TS4111: Property 'id' comes from an index signature, so it must be accessed with ['id'].
+
+322         definitions: this.getChineseDefinitions(row.id as number),
+                                                        ~~
+
+
+Error: src/app/services/dictionary.service.ts:323:46 - error TS4111: Property 'id' comes from an index signature, so it must be accessed with ['id'].
+
+323         examples: this.getExamples('zh', row.id as number)
+                                                 ~~
+
+
+Error: src/app/services/dictionary.service.ts:360:17 - error TS4111: Property 'id' comes from an index signature, so it must be accessed with ['id'].
+
+360         id: row.id as number,
+                    ~~
+
+
+Error: src/app/services/dictionary.service.ts:361:25 - error TS4111: Property 'simplified' comes from an index signature, so it must be accessed with ['simplified'].
+
+361         simplified: row.simplified as string,
+                            ~~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:362:26 - error TS4111: Property 'traditional' comes from an index signature, so it must be accessed with ['traditional'].
+
+362         traditional: row.traditional as string,
+                             ~~~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:363:21 - error TS4111: Property 'pinyin' comes from an index signature, so it must be accessed with ['pinyin'].
+
+363         pinyin: row.pinyin as string,
+                        ~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:364:24 - error TS4111: Property 'is_common' comes from an index signature, so it must be accessed with ['is_common'].
+
+364         is_common: row.is_common === 1,
+                           ~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:365:29 - error TS4111: Property 'frequency_rank' comes from an index signature, so it must be accessed with ['frequency_rank'].
+
+365         frequency_rank: row.frequency_rank as number | null,
+                                ~~~~~~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:366:24 - error TS4111: Property 'hsk_level' comes from an index signature, so it must be accessed with ['hsk_level'].
+
+366         hsk_level: row.hsk_level as string | null,
+                           ~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:367:27 - error TS4111: Property 'stroke_count' comes from an index signature, so it must be accessed with ['stroke_count'].
+
+367         stroke_count: row.stroke_count as number | null,
+                              ~~~~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:368:25 - error TS4111: Property 'components' comes from an index signature, so it must be accessed with ['components'].
+
+368         components: row.components as string | null,
+                            ~~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:369:28 - error TS4111: Property 'decomposition' comes from an index signature, so it must be accessed with ['decomposition'].
+
+369         decomposition: row.decomposition as string | null,
+                               ~~~~~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:370:25 - error TS4111: Property 'stroke_svg' comes from an index signature, so it must be accessed with ['stroke_svg'].
+
+370         stroke_svg: row.stroke_svg as string | null,
+                            ~~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:371:53 - error TS4111: Property 'id' comes from an index signature, so it must be accessed with ['id'].
+
+371         definitions: this.getChineseDefinitions(row.id as number),
+                                                        ~~
+
+
+Error: src/app/services/dictionary.service.ts:372:46 - error TS4111: Property 'id' comes from an index signature, so it must be accessed with ['id'].
+
+372         examples: this.getExamples('zh', row.id as number)
+                                                 ~~
+
+
+Error: src/app/services/dictionary.service.ts:389:21 - error TS4111: Property 'english_gloss' comes from an index signature, so it must be accessed with ['english_gloss'].
+
+389       defs.push(row.english_gloss as string);
+                        ~~~~~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:405:21 - error TS4111: Property 'english_gloss' comes from an index signature, so it must be accessed with ['english_gloss'].
+
+405       defs.push(row.english_gloss as string);
+                        ~~~~~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:425:26 - error TS4111: Property 'source_text' comes from an index signature, so it must be accessed with ['source_text'].
+
+425         source_text: row.source_text as string,
+                             ~~~~~~~~~~~
+
+
+Error: src/app/services/dictionary.service.ts:426:27 - error TS4111: Property 'english_text' comes from an index signature, so it must be accessed with ['english_text'].
+
+426         english_text: row.english_text as string
+                              ~~~~~~~~~~~~
+
+
+
+
+** Angular Live Development Server is listening on localhost:4200, open your browser on http://localhost:4200/ **
+
+
+✖ Failed to compile.
