@@ -11,10 +11,16 @@ import (
 )
 
 // Query performs triangular translation lookup
-func Query(db *database.DB, input string) (*types.Response, error) {
+// maxResults: maximum number of results per language (0 = unlimited, default 5)
+func Query(db *database.DB, input string, maxResults int) (*types.Response, error) {
 	input = strings.TrimSpace(input)
 	if input == "" {
 		return nil, fmt.Errorf("empty query")
+	}
+
+	// Default to 5 results if not specified
+	if maxResults == 0 {
+		maxResults = 5
 	}
 
 	lang := detector.DetectLanguage(input)
@@ -30,13 +36,13 @@ func Query(db *database.DB, input string) (*types.Response, error) {
 	var err error
 	switch lang {
 	case "en":
-		err = queryFromEnglish(db, input, response)
+		err = queryFromEnglish(db, input, response, maxResults)
 	case "ja":
-		err = queryFromJapanese(db, input, response)
+		err = queryFromJapanese(db, input, response, maxResults)
 	case "zh":
-		err = queryFromChinese(db, input, response)
+		err = queryFromChinese(db, input, response, maxResults)
 	case "ambiguous":
-		err = queryAmbiguous(db, input, response)
+		err = queryAmbiguous(db, input, response, maxResults)
 	default:
 		return nil, fmt.Errorf("unsupported language: %s", lang)
 	}
@@ -45,14 +51,14 @@ func Query(db *database.DB, input string) (*types.Response, error) {
 }
 
 // queryFromEnglish searches from English to Japanese and Chinese
-func queryFromEnglish(db *database.DB, input string, response *types.Response) error {
+func queryFromEnglish(db *database.DB, input string, response *types.Response, maxResults int) error {
 	// Query Japanese
 	jaWords, err := db.QueryJapaneseByEnglish(input)
 	if err != nil {
 		return fmt.Errorf("japanese query failed: %w", err)
 	}
 
-	jaWords = ranker.RankJapanese(jaWords)
+	jaWords = ranker.RankJapanese(jaWords, maxResults)
 	for _, w := range jaWords {
 		output := japaneseToOutput(w)
 		response.Outputs = append(response.Outputs, output)
@@ -64,7 +70,7 @@ func queryFromEnglish(db *database.DB, input string, response *types.Response) e
 		return fmt.Errorf("chinese query failed: %w", err)
 	}
 
-	zhWords = ranker.RankChinese(zhWords)
+	zhWords = ranker.RankChinese(zhWords, maxResults)
 	for _, w := range zhWords {
 		output := chineseToOutput(w)
 		response.Outputs = append(response.Outputs, output)
@@ -74,25 +80,26 @@ func queryFromEnglish(db *database.DB, input string, response *types.Response) e
 }
 
 // queryFromJapanese searches from Japanese to English and Chinese (via English pivot)
-func queryFromJapanese(db *database.DB, input string, response *types.Response) error {
+func queryFromJapanese(db *database.DB, input string, response *types.Response, maxResults int) error {
 	// Direct lookup in Japanese
 	jaWords, err := db.QueryJapanese(input, input)
 	if err != nil {
 		return fmt.Errorf("japanese query failed: %w", err)
 	}
 
-	jaWords = ranker.RankJapanese(jaWords)
+	jaWords = ranker.RankJapanese(jaWords, maxResults)
 	if len(jaWords) == 0 {
 		return nil
 	}
 
-	// Add Japanese result
-	jaWord := jaWords[0]
-	response.Outputs = append(response.Outputs, japaneseToOutput(jaWord))
+	// Add all Japanese results
+	for _, jaWord := range jaWords {
+		response.Outputs = append(response.Outputs, japaneseToOutput(jaWord))
+	}
 
-	// Get English glosses for pivot
+	// Get English glosses from top result for pivot
 	var englishGlosses []string
-	for _, def := range jaWord.Definitions {
+	for _, def := range jaWords[0].Definitions {
 		englishGlosses = append(englishGlosses, def.EnglishGloss)
 	}
 
@@ -103,7 +110,7 @@ func queryFromJapanese(db *database.DB, input string, response *types.Response) 
 			return fmt.Errorf("chinese pivot query failed: %w", err)
 		}
 
-		zhWords = ranker.RankChinese(zhWords)
+		zhWords = ranker.RankChinese(zhWords, maxResults)
 		for _, w := range zhWords {
 			output := chineseToOutput(w)
 			response.Outputs = append(response.Outputs, output)
@@ -114,25 +121,26 @@ func queryFromJapanese(db *database.DB, input string, response *types.Response) 
 }
 
 // queryFromChinese searches from Chinese to English and Japanese (via English pivot)
-func queryFromChinese(db *database.DB, input string, response *types.Response) error {
+func queryFromChinese(db *database.DB, input string, response *types.Response, maxResults int) error {
 	// Direct lookup in Chinese
 	zhWords, err := db.QueryChinese(input)
 	if err != nil {
 		return fmt.Errorf("chinese query failed: %w", err)
 	}
 
-	zhWords = ranker.RankChinese(zhWords)
+	zhWords = ranker.RankChinese(zhWords, maxResults)
 	if len(zhWords) == 0 {
 		return nil
 	}
 
-	// Add Chinese result
-	zhWord := zhWords[0]
-	response.Outputs = append(response.Outputs, chineseToOutput(zhWord))
+	// Add all Chinese results
+	for _, zhWord := range zhWords {
+		response.Outputs = append(response.Outputs, chineseToOutput(zhWord))
+	}
 
-	// Get English glosses for pivot
+	// Get English glosses from top result for pivot
 	var englishGlosses []string
-	for _, def := range zhWord.Definitions {
+	for _, def := range zhWords[0].Definitions {
 		englishGlosses = append(englishGlosses, def.EnglishGloss)
 	}
 
@@ -143,7 +151,7 @@ func queryFromChinese(db *database.DB, input string, response *types.Response) e
 			return fmt.Errorf("japanese pivot query failed: %w", err)
 		}
 
-		jaWords = ranker.RankJapanese(jaWords)
+		jaWords = ranker.RankJapanese(jaWords, maxResults)
 		for _, w := range jaWords {
 			output := japaneseToOutput(w)
 			response.Outputs = append(response.Outputs, output)
@@ -154,7 +162,7 @@ func queryFromChinese(db *database.DB, input string, response *types.Response) e
 }
 
 // queryAmbiguous tries both Japanese and Chinese
-func queryAmbiguous(db *database.DB, input string, response *types.Response) error {
+func queryAmbiguous(db *database.DB, input string, response *types.Response, maxResults int) error {
 	// Try Japanese first
 	jaWords, err := db.QueryJapanese(input, input)
 	if err != nil {
@@ -170,12 +178,12 @@ func queryAmbiguous(db *database.DB, input string, response *types.Response) err
 	// If we have results from both, it's truly ambiguous
 	// Process as Japanese if found
 	if len(jaWords) > 0 {
-		return queryFromJapanese(db, input, response)
+		return queryFromJapanese(db, input, response, maxResults)
 	}
 
 	// Otherwise try Chinese
 	if len(zhWords) > 0 {
-		return queryFromChinese(db, input, response)
+		return queryFromChinese(db, input, response, maxResults)
 	}
 
 	return nil

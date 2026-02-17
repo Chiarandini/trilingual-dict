@@ -6,8 +6,9 @@ import (
 	"github.com/Chiarandini/trilingual-dict/core/types"
 )
 
-// RankJapanese sorts Japanese words by priority and returns the top result
-func RankJapanese(words []types.JapaneseWord) []types.JapaneseWord {
+// RankJapanese sorts Japanese words by priority and returns the top results
+// maxResults: maximum number of results to return (0 = unlimited)
+func RankJapanese(words []types.JapaneseWord, maxResults int) []types.JapaneseWord {
 	if len(words) == 0 {
 		return words
 	}
@@ -17,12 +18,16 @@ func RankJapanese(words []types.JapaneseWord) []types.JapaneseWord {
 		return japaneseScore(words[i]) > japaneseScore(words[j])
 	})
 
-	// Phase 1: Return only top result
-	return words[:1]
+	// Return top N results
+	if maxResults <= 0 || maxResults >= len(words) {
+		return words
+	}
+	return words[:maxResults]
 }
 
-// RankChinese sorts Chinese words by priority and returns the top result
-func RankChinese(words []types.ChineseWord) []types.ChineseWord {
+// RankChinese sorts Chinese words by priority and returns the top results
+// maxResults: maximum number of results to return (0 = unlimited)
+func RankChinese(words []types.ChineseWord, maxResults int) []types.ChineseWord {
 	if len(words) == 0 {
 		return words
 	}
@@ -32,8 +37,11 @@ func RankChinese(words []types.ChineseWord) []types.ChineseWord {
 		return chineseScore(words[i]) > chineseScore(words[j])
 	})
 
-	// Phase 1: Return only top result
-	return words[:1]
+	// Return top N results
+	if maxResults <= 0 || maxResults >= len(words) {
+		return words
+	}
+	return words[:maxResults]
 }
 
 // japaneseScore calculates priority score for a Japanese word
