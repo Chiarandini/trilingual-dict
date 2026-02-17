@@ -6,6 +6,7 @@ import (
 
 	"github.com/Chiarandini/trilingual-dict/core/database"
 	"github.com/Chiarandini/trilingual-dict/core/detector"
+	"github.com/Chiarandini/trilingual-dict/core/pinyin"
 	"github.com/Chiarandini/trilingual-dict/core/ranker"
 	"github.com/Chiarandini/trilingual-dict/core/types"
 )
@@ -249,7 +250,7 @@ func chineseToOutput(w types.ChineseWord) types.LanguageOutput {
 	output := types.LanguageOutput{
 		Language:   "zh",
 		Headword:   w.Simplified,
-		Reading:    w.Pinyin,
+		Reading:    pinyin.NumberedToTones(w.Pinyin), // Convert numbered pinyin to tone marks
 		Definition: definition,
 		Examples:   w.Examples,
 	}
