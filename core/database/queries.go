@@ -3,7 +3,6 @@ package database
 import (
 	"database/sql"
 	"fmt"
-	"strings"
 
 	"github.com/Chiarandini/trilingual-dict/core/types"
 )
@@ -29,17 +28,33 @@ func (db *DB) QueryJapanese(headword, reading string) ([]types.JapaneseWord, err
 
 // QueryJapaneseByEnglish searches for Japanese words by English gloss
 func (db *DB) QueryJapaneseByEnglish(gloss string) ([]types.JapaneseWord, error) {
+	// Strict word boundary matching - only exact matches or definitions starting with the word
+	// e.g., "cat" matches "cat", "cat (animal)", "cat; feline"
+	// but NOT "raccoon cat", "sly cat", "wildcat"
+	// Phase 1: Return only primary/exact matches
+	// Phase 2: Can include compound words as additional results
 	query := `
 		SELECT DISTINCT w.id, w.headword, w.reading, w.is_common, w.frequency_rank,
 		       w.jlpt_level, w.stroke_count, w.components, w.stroke_svg
 		FROM japanese_words w
 		JOIN japanese_definitions d ON w.id = d.word_id
-		WHERE d.english_gloss LIKE ?
-		ORDER BY w.is_common DESC, w.frequency_rank ASC
+		WHERE LOWER(d.english_gloss) = LOWER(?)
+		   OR LOWER(d.english_gloss) LIKE LOWER(?) || ' (%'
+		   OR LOWER(d.english_gloss) LIKE LOWER(?) || ';%'
+		   OR LOWER(d.english_gloss) LIKE '%;' || LOWER(?)
+		   OR LOWER(d.english_gloss) LIKE '%; ' || LOWER(?) || ';%'
+		ORDER BY
+		   CASE
+		     WHEN LOWER(d.english_gloss) = LOWER(?) THEN 0
+		     WHEN LOWER(d.english_gloss) LIKE LOWER(?) || ' (%' THEN 1
+		     WHEN LOWER(d.english_gloss) LIKE LOWER(?) || ';%' THEN 2
+		     ELSE 3
+		   END,
+		   w.is_common DESC,
+		   w.frequency_rank ASC
 	`
 
-	searchTerm := "%" + strings.ToLower(gloss) + "%"
-	rows, err := db.conn.Query(query, searchTerm)
+	rows, err := db.conn.Query(query, gloss, gloss, gloss, gloss, gloss, gloss, gloss, gloss)
 	if err != nil {
 		return nil, err
 	}
@@ -69,18 +84,34 @@ func (db *DB) QueryChinese(simplified string) ([]types.ChineseWord, error) {
 
 // QueryChineseByEnglish searches for Chinese words by English gloss
 func (db *DB) QueryChineseByEnglish(gloss string) ([]types.ChineseWord, error) {
+	// Strict word boundary matching - only exact matches or definitions starting with the word
+	// e.g., "cat" matches "cat", "cat (animal)", "cat; feline"
+	// but NOT "raccoon cat", "sly cat", "wildcat"
+	// Phase 1: Return only primary/exact matches
+	// Phase 2: Can include compound words as additional results
 	query := `
 		SELECT DISTINCT w.id, w.simplified, w.traditional, w.pinyin, w.is_common,
 		       w.frequency_rank, w.hsk_level, w.stroke_count, w.components,
 		       w.decomposition, w.stroke_svg
 		FROM chinese_words w
 		JOIN chinese_definitions d ON w.id = d.word_id
-		WHERE d.english_gloss LIKE ?
-		ORDER BY w.is_common DESC, w.frequency_rank ASC
+		WHERE LOWER(d.english_gloss) = LOWER(?)
+		   OR LOWER(d.english_gloss) LIKE LOWER(?) || ' (%'
+		   OR LOWER(d.english_gloss) LIKE LOWER(?) || ';%'
+		   OR LOWER(d.english_gloss) LIKE '%;' || LOWER(?)
+		   OR LOWER(d.english_gloss) LIKE '%; ' || LOWER(?) || ';%'
+		ORDER BY
+		   CASE
+		     WHEN LOWER(d.english_gloss) = LOWER(?) THEN 0
+		     WHEN LOWER(d.english_gloss) LIKE LOWER(?) || ' (%' THEN 1
+		     WHEN LOWER(d.english_gloss) LIKE LOWER(?) || ';%' THEN 2
+		     ELSE 3
+		   END,
+		   w.is_common DESC,
+		   w.frequency_rank ASC
 	`
 
-	searchTerm := "%" + strings.ToLower(gloss) + "%"
-	rows, err := db.conn.Query(query, searchTerm)
+	rows, err := db.conn.Query(query, gloss, gloss, gloss, gloss, gloss, gloss, gloss, gloss)
 	if err != nil {
 		return nil, err
 	}

@@ -249,15 +249,28 @@ export class DictionaryService {
   }
 
   private queryJapaneseByEnglish(gloss: string): JapaneseWord[] {
+    // Strict word boundary matching - only exact matches or definitions starting with the word
+    // Phase 1: Return only primary/exact matches
     const stmt = this.db!.prepare(`
       SELECT DISTINCT w.id, w.headword, w.reading, w.is_common, w.frequency_rank,
              w.jlpt_level, w.stroke_count, w.components, w.stroke_svg
       FROM japanese_words w
       JOIN japanese_definitions d ON w.id = d.word_id
-      WHERE d.english_gloss LIKE ?
-      ORDER BY w.is_common DESC, w.frequency_rank ASC
+      WHERE LOWER(d.english_gloss) = LOWER(?)
+         OR LOWER(d.english_gloss) LIKE LOWER(?) || ' (%'
+         OR LOWER(d.english_gloss) LIKE LOWER(?) || ';%'
+         OR LOWER(d.english_gloss) LIKE '%;' || LOWER(?)
+         OR LOWER(d.english_gloss) LIKE '%; ' || LOWER(?) || ';%'
+      ORDER BY
+         CASE
+           WHEN LOWER(d.english_gloss) = LOWER(?) THEN 0
+           WHEN LOWER(d.english_gloss) LIKE LOWER(?) || ' (%' THEN 1
+           WHEN LOWER(d.english_gloss) LIKE LOWER(?) || ';%' THEN 2
+           ELSE 3
+         END,
+         w.is_common DESC, w.frequency_rank ASC
     `);
-    stmt.bind([`%${gloss.toLowerCase()}%`]);
+    stmt.bind([gloss, gloss, gloss, gloss, gloss, gloss, gloss, gloss]);
 
     const words: JapaneseWord[] = [];
     while (stmt.step()) {
@@ -316,16 +329,29 @@ export class DictionaryService {
   }
 
   private queryChineseByEnglish(gloss: string): ChineseWord[] {
+    // Strict word boundary matching - only exact matches or definitions starting with the word
+    // Phase 1: Return only primary/exact matches
     const stmt = this.db!.prepare(`
       SELECT DISTINCT w.id, w.simplified, w.traditional, w.pinyin, w.is_common,
              w.frequency_rank, w.hsk_level, w.stroke_count, w.components,
              w.decomposition, w.stroke_svg
       FROM chinese_words w
       JOIN chinese_definitions d ON w.id = d.word_id
-      WHERE d.english_gloss LIKE ?
-      ORDER BY w.is_common DESC, w.frequency_rank ASC
+      WHERE LOWER(d.english_gloss) = LOWER(?)
+         OR LOWER(d.english_gloss) LIKE LOWER(?) || ' (%'
+         OR LOWER(d.english_gloss) LIKE LOWER(?) || ';%'
+         OR LOWER(d.english_gloss) LIKE '%;' || LOWER(?)
+         OR LOWER(d.english_gloss) LIKE '%; ' || LOWER(?) || ';%'
+      ORDER BY
+         CASE
+           WHEN LOWER(d.english_gloss) = LOWER(?) THEN 0
+           WHEN LOWER(d.english_gloss) LIKE LOWER(?) || ' (%' THEN 1
+           WHEN LOWER(d.english_gloss) LIKE LOWER(?) || ';%' THEN 2
+           ELSE 3
+         END,
+         w.is_common DESC, w.frequency_rank ASC
     `);
-    stmt.bind([`%${gloss.toLowerCase()}%`]);
+    stmt.bind([gloss, gloss, gloss, gloss, gloss, gloss, gloss, gloss]);
 
     const words: ChineseWord[] = [];
     while (stmt.step()) {

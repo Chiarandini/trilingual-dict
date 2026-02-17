@@ -1,0 +1,39 @@
+{
+  "meta": {
+    "input_language": "en",
+    "query": "cat"
+  },
+  "outputs": [
+    {
+      "language": "ja",
+      "headword": "等",
+      "reading": "ら",
+      "definition": "pluralizing suffix; or so; rough indicator of direction, location, amount, etc.; nominalizing suffix",
+      "rank": 50,
+      "audio": {
+        "type": "tts",
+        "text": "等",
+        "locale": "ja-JP"
+      },
+      "meta": {
+        "stroke_count": 12
+      }
+    },
+    {
+      "language": "zh",
+      "headword": "齈",
+      "reading": "nong2",
+      "definition": "cold in the head catarrh of the nose",
+      "rank": 100,
+      "audio": {
+        "type": "tts",
+        "text": "齈",
+        "locale": "zh-CN"
+      },
+      "meta": {
+        "traditional": "齈",
+        "stroke_count": 10
+      }
+    }
+  ]
+}
