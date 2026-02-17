@@ -5,11 +5,13 @@ A comprehensive dictionary system supporting English, Japanese, and Chinese with
 ## Features
 
 - **Triangular Translation**: Translate between any pair of languages (EN/JA/ZH) using English as the intermediate language
+- **Multiple Results**: Returns top 5 results per language (configurable) instead of just one
 - **Automatic Language Detection**: Smart detection based on Unicode ranges
 - **Multiple Frontends**: CLI, Neovim plugin, Web app, and iOS app (in progress)
-- **Rich Metadata**: JLPT/HSK levels, stroke counts, example sentences
+- **Rich Metadata**: JLPT/HSK levels, stroke counts, example sentences, rank indicators
 - **Text-to-Speech**: Pronunciation support across all platforms
 - **Offline-First**: No server required for any frontend
+- **Progressive Disclosure**: Web UI shows top 3 results with "Show more" to expand
 
 ## Quick Start
 
@@ -27,16 +29,25 @@ This creates `dictionary.db` with 20 word pairs for testing.
 ```bash
 cd cmd/dict
 go build -o dict
-./dict cat
+./dict cat              # Returns 5 results per language
+./dict cat -n 1         # Returns single best match
+./dict cat -n 10        # Returns 10 results per language
 ```
 
-Expected output:
+Expected output (default 5 results, showing first 2):
 ```
-╭─ Japanese ────────────╮  ╭─ Chinese ──────────────╮
-│ 猫 (ねこ)             │  │ 猫 (māo)               │
-│ cat                   │  │ cat                    │
-│ JLPT: N3 | 11 strokes │  │ HSK: 1 | 11 strokes    │
-╰───────────────────────╯  ╰────────────────────────╯
+╭─ Japanese (5 results) ────────────────╮
+│ 1.                                    │
+│ 猫 (ねこ)                             │
+│ cat                                   │
+│ ★ Common | JLPT: N3 | 11 strokes     │
+│                                       │
+│ ───────────────────────               │
+│                                       │
+│ 2.                                    │
+│ キャット (キャット)                   │
+│ cat                                   │
+╰───────────────────────────────────────╯
 ```
 
 ### 3. Try Other Frontends
@@ -173,8 +184,12 @@ python3 ingest.py --input sources
 ### CLI
 
 ```bash
-# English → Japanese + Chinese
+# English → Japanese + Chinese (default: 5 results each)
 ./dict cat
+
+# Custom result limit
+./dict cat -n 10        # 10 results per language
+./dict cat --limit 1    # Single best match (Phase 1 behavior)
 
 # Japanese → English + Chinese
 ./dict 猫
@@ -185,7 +200,7 @@ python3 ingest.py --input sources
 # Chinese → English + Japanese
 ./dict 吃
 
-# JSON output
+# JSON output (includes all results)
 ./dict --json cat
 ```
 
@@ -260,13 +275,23 @@ All frontends use a common JSON response format:
 }
 ```
 
+## Recent Updates
+
+✅ **Phase 2 Complete** (Feb 17, 2026):
+- Multiple word results (default: 5 per language, configurable)
+- Fancy CLI boxes with numbered results and rank indicators
+- Web UI with "Show more" progressive disclosure
+- Consistent API across CLI and Web platforms
+
+See [PHASE_2.md](PHASE_2.md) for full details.
+
 ## Next Steps
 
-- [ ] **Full Data Ingestion** - Implement JMdict/CC-CEDICT parsing
-- [ ] **iOS Database Queries** - Complete DatabaseManager implementation
-- [ ] **Unit Tests** - Add test coverage for all modules
-- [ ] **Fuzzy Search** - Add approximate matching
-- [ ] **Top-N Results** - Return multiple results instead of just top-1
+- [ ] **iOS Phase 2** - Implement multiple results for iOS app
+- [ ] **Full Data Ingestion** - Use JMdict/CC-CEDICT parsers to build production database
+- [ ] **Deployment** - Deploy web app and CLI to production
+- [ ] **Fuzzy Search** - Add approximate matching for typos
+- [ ] **Advanced Filtering** - Filter by JLPT/HSK level, commonality
 
 See [STATUS.md](STATUS.md) for detailed roadmap.
 

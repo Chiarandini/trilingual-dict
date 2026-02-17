@@ -1,4 +1,4 @@
-# Project Status - Updated Feb 16, 2026 (Latest)
+# Project Status - Updated Feb 17, 2026 (Latest)
 
 ## ✅ Completed Components
 
@@ -18,6 +18,9 @@
 - [x] Side-by-side display
 - [x] Tested with multiple input types
 - [x] Cross-platform builds
+- [x] **Multiple word results** (default: 5, configurable via `--limit`/`-n`)
+- [x] **Fancy boxes** with numbered results, separators, rank indicators
+- [x] **Result counts** in headers ("Japanese (5 results)")
 
 ### Phase 3: Neovim Plugin
 - [x] `:Dict` and `:DictWord` commands
@@ -32,6 +35,10 @@
 - [x] Material Design UI
 - [x] Web Speech API for TTS
 - [x] **Integrated into personal website** ✅
+- [x] **Multiple word results** (default: 5, configurable)
+- [x] **Progressive disclosure** (shows 3, "Show more" to expand)
+- [x] **Result counts** and numbered cards
+- [x] **Hover effects** and rank indicators
 
 ### Phase 5: iOS Application
 - [x] SwiftUI views (ContentView, ResultCard, DetailView)
@@ -87,7 +94,7 @@
 - **Sample**: 20 word pairs (73KB) ✅
 - **Full**: Scripts ready (~25-30MB with 300k entries) ✅
 
-## ✅ Recently Completed (Feb 16, 2026)
+## ✅ Recently Completed (Feb 16-17, 2026)
 
 ### 1. Full Data Ingestion ✅
 **Status**: Implementation complete, ready for production use
@@ -167,9 +174,63 @@ python3 ingest.py --input sources
   - Coverage goals (>80% Go, >70% TS/iOS)
   - CI/CD integration examples
 
+### 4. Phase 2: Multiple Word Results ✅
+**Status**: CLI and Web implementation complete (Feb 17, 2026)
+
+**Implemented**:
+- ✅ Core Go library updated with `maxResults` parameter
+  - `ranker.go` - RankJapanese/RankChinese return top N
+  - `triangulate.go` - Query() accepts maxResults (default: 5)
+- ✅ CLI application enhanced
+  - `--limit`/`-n` flags for configurable result count
+  - Fancy boxes with lipgloss styling
+  - Numbered results (1, 2, 3...)
+  - Visual separators between results
+  - Rank indicators (★ Common)
+  - Result counts in headers
+- ✅ Web application updated
+  - TypeScript service mirrors Go API
+  - Multiple result cards with numbering
+  - Progressive disclosure (show 3, expand to all)
+  - "Show N more" button
+  - Hover effects on cards
+  - Result count badges
+  - Rank indicators
+- ✅ Documentation
+  - PHASE_2.md - Comprehensive implementation guide
+  - Updated README.md with Phase 2 features
+  - Committed to git (hash: ccdfa3bc)
+
+**Platform Status**:
+- CLI: ✅ Complete and tested
+- Web: ✅ Complete and tested (Angular build successful)
+- iOS: ⏸️ Pending implementation
+
+**Usage**:
+```bash
+# CLI
+dict cat              # Default: 5 results per language
+dict cat -n 10        # 10 results per language
+dict cat -n 1         # Single result (Phase 1 behavior)
+
+# Web
+# Visit /dictionary, search returns 5 results
+# Shows first 3, click "Show more" to see all
+```
+
 ## 📋 Next Steps
 
 ### Immediate (Ready to Execute)
+
+1. **iOS Phase 2** - Implement multiple results
+   - Update DatabaseManager with maxResults parameter
+   - Update UI for scrollable list of results
+   - Add result numbering and counts
+
+2. **Production Deployment**
+   - Deploy web application with Phase 2 features
+   - Build and distribute CLI binaries
+   - Generate full production database
 
 ## 📁 Project Structure
 
@@ -192,10 +253,11 @@ trilingual-dict/
 ├── docs/                  ✅ Organized documentation
 │   ├── archive/           ✅ Implementation notes
 │   └── setup-guides/      ✅ Integration guides
-├── README.md              ✅ Main documentation
+├── README.md              ✅ Main documentation (Phase 2 updated)
 ├── ARCHITECTURE.md        ✅ Technical design
 ├── STATUS.md              ✅ This file (updated)
-├── TESTING.md             ✅ Testing guide (new)
+├── TESTING.md             ✅ Testing guide
+├── PHASE_2.md             ✅ Phase 2 implementation (new)
 └── Makefile              ✅ Build automation
 ```
 
@@ -221,7 +283,9 @@ ok    query       0.018s (4 skipped)
 
 ### CLI
 ```bash
-✅ ./cmd/dict/dict cat        # English → JA/ZH
+✅ ./cmd/dict/dict cat        # English → JA/ZH (5 results each)
+✅ ./cmd/dict/dict cat -n 10  # 10 results per language
+✅ ./cmd/dict/dict cat -n 1   # Single best match
 ✅ ./cmd/dict/dict 猫         # Ambiguous → both
 ✅ ./cmd/dict/dict ねこ       # Japanese → EN/ZH
 ✅ ./cmd/dict/dict --json 吃  # Chinese → JSON
@@ -231,6 +295,10 @@ ok    query       0.018s (4 skipped)
 ```
 ✅ http://localhost:4200/dictionary
 ✅ Search: cat, dog, 猫, ねこ, 吃
+✅ Multiple results (5 per language, shows 3 with "Show more")
+✅ Numbered cards with hover effects
+✅ Result count badges
+✅ Rank indicators (★ Common)
 ✅ Audio playback working
 ✅ TypeScript errors resolved
 ✅ Webpack polyfills configured
@@ -319,19 +387,27 @@ ok    query       0.018s (4 skipped)
 - **Week 2**: iOS database queries + Unit tests
 - **Week 3**: Polish, documentation, deployment
 
-## 🎉 Major Milestone Achieved
+## 🎉 Major Milestones Achieved
 
-**All "Immediate (Ready to Implement)" tasks completed!**
+**Phase 2 Complete!** (Feb 17, 2026)
 
 The trilingual dictionary system now has:
 1. ✅ Complete data ingestion pipeline (ready for ~300k entries)
 2. ✅ Full iOS database implementation (all 4 platforms working)
 3. ✅ Comprehensive unit test coverage (Go + TypeScript)
+4. ✅ **Multiple word results** (CLI + Web complete, iOS pending)
+   - Configurable result limits (default: 5)
+   - Fancy CLI boxes with numbering and rank indicators
+   - Web progressive disclosure (show 3, expand to all)
+   - Consistent API across platforms
 
-**Ready for**: Production database build, iOS app testing, and deployment
+**Ready for**:
+- iOS Phase 2 implementation
+- Production deployment (web + CLI)
+- Full database generation for production use
 
 ---
 
-**Last Updated**: Feb 16, 2026 (Latest)
-**Current Focus**: Production database generation and end-to-end testing
-**Status**: All core features complete ✅
+**Last Updated**: Feb 17, 2026 (Latest)
+**Current Focus**: iOS Phase 2 implementation and production deployment
+**Status**: Phase 2 (CLI + Web) complete ✅
