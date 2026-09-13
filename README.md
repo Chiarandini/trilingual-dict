@@ -275,47 +275,46 @@ All frontends use a common JSON response format:
 }
 ```
 
-## Recent Updates
+## Roadmap
 
-✅ **Phase 2 Complete** (Feb 17, 2026):
-- Multiple word results (default: 5 per language, configurable)
-- Fancy CLI boxes with numbered results and rank indicators
-- Web UI with "Show more" progressive disclosure
-- Consistent API across CLI and Web platforms
+- [ ] **Full data ingestion** - build the production database from JMdict and
+      CC-CEDICT rather than the sample set
+- [ ] **iOS multiple results** - bring the iOS frontend to parity with CLI/web
+- [ ] **Deployment** - host the web app
+- [ ] **Fuzzy search** - approximate matching for typos
+- [ ] **Filtering** - by JLPT/HSK level and commonality
 
-See [PHASE_2.md](PHASE_2.md) for full details.
+See [STATUS.md](STATUS.md) for the detailed roadmap, and
+[`docs/archive/`](docs/archive/) for implementation notes.
 
-## Next Steps
+## Data sources
 
-- [ ] **iOS Phase 2** - Implement multiple results for iOS app
-- [ ] **Full Data Ingestion** - Use JMdict/CC-CEDICT parsers to build production database
-- [ ] **Deployment** - Deploy web app and CLI to production
-- [ ] **Fuzzy Search** - Add approximate matching for typos
-- [ ] **Advanced Filtering** - Filter by JLPT/HSK level, commonality
+| Source | Content | Licence |
+|---|---|---|
+| [JMdict](https://www.edrdg.org/jmdict/j_jmdict.html) | Japanese-English entries, JLPT levels | CC BY-SA 3.0 |
+| [CC-CEDICT](https://cc-cedict.org/) | Chinese-English entries, pinyin | CC BY-SA 4.0 |
+| [KANJIDIC2](https://www.edrdg.org/wiki/index.php/KANJIDIC_Project) | Kanji metadata, stroke counts | CC BY-SA 3.0 |
 
-See [STATUS.md](STATUS.md) for detailed roadmap.
+JMdict and KANJIDIC2 are the property of the Electronic Dictionary Research
+and Development Group, used in conformance with the group's
+[licence](https://www.edrdg.org/edrdg/licence.html).
 
-## Data Sources
+## Licence
 
-- **JMdict**: Japanese-English dictionary (CC BY-SA 3.0)
-- **CC-CEDICT**: Chinese-English dictionary (CC BY-SA 4.0)
-- **KANJIDIC2**: Kanji character database (CC BY-SA 3.0)
+Two licences apply, to different parts of this repository:
 
-## Repository
+- **Code** (Go core, CLI, Neovim plugin, web and iOS frontends): MIT, see
+  [`LICENSE`](LICENSE).
+- **Dictionary data, and any `dictionary.db` built from it**: CC BY-SA,
+  inherited from the sources above. Share-alike terms follow the data into
+  derivative works, so if you redistribute a built database you must attribute
+  the sources and keep it under CC BY-SA. See
+  [`DATA-LICENSES.md`](DATA-LICENSES.md).
 
-https://github.com/Chiarandini/trilingual-dict
-
-## License
-
-MIT License - see LICENSE file for details
+The MIT licence on the code does not let you relicense the data.
 
 ## Credits
 
-- Dictionary data: JMdict, CC-CEDICT, KANJIDIC2
-- Go libraries: mattn/go-sqlite3, charmbracelet/lipgloss
-- Web: SQL.js, Angular
-- iOS: AVFoundation
-
----
-
-Built for language learners 🌏
+- **Go**: mattn/go-sqlite3, charmbracelet/lipgloss
+- **Web**: SQL.js, Angular
+- **iOS**: AVFoundation

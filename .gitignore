@@ -28,8 +28,18 @@ data/tatoeba/
 *.gz
 *.zip
 
-# Database (if too large)
-# dictionary.db  # Uncomment if database is large
+# Database
+# NOTE: prebuilt dictionary.db files ARE currently tracked. They are large
+# (the biggest is ~75MB in git history), so a clone is heavy. To drop them,
+# generate instead: data/sample/generate_samples.py for development, or
+# data/ingest.py for the full build.
+*.db-journal
+*.db.old
+
+# Local dev environment, not part of the project
+.envrc
+.mise.toml
+claude_resume_resion.txt
 
 # IDE
 .vscode/
