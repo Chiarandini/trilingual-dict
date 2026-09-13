@@ -19,30 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-NOTE ON DICTIONARY DATA
-=======================
-
-The MIT licence above covers the SOURCE CODE of this project only.
-
-It does NOT cover the dictionary data, or any database file built from it.
-That data comes from third-party projects released under share-alike terms,
-and those terms follow the data into any derivative work, including the
-SQLite databases this project generates:
-
-  - JMdict     (Japanese-English)   CC BY-SA 3.0
-                                     Electronic Dictionary Research and
-                                     Development Group (EDRDG)
-                                     https://www.edrdg.org/edrdg/licence.html
-
-  - CC-CEDICT  (Chinese-English)    CC BY-SA 4.0
-                                     https://cc-cedict.org/
-
-  - KANJIDIC2  (Kanji database)     CC BY-SA 3.0
-                                     EDRDG, as above
-
-If you redistribute a database built by this project, or any work derived
-from one, you must attribute the sources above and license that database
-under the same CC BY-SA terms. See DATA-LICENSES.md for detail.

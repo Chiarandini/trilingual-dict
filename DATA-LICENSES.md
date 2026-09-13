@@ -1,9 +1,13 @@
 # Dictionary data licences
 
-The code in this repository is MIT (see `LICENSE`). **The dictionary data is
-not.** It comes from three third-party projects, all under share-alike terms.
-Those terms propagate into derivative works, which includes any
-`dictionary.db` this project builds.
+> **The MIT licence in [`LICENSE`](LICENSE) covers the source code of this
+> project only. It does not cover the dictionary data, or any database file
+> built from that data.** `LICENSE` is kept as unmodified MIT text so that
+> automated licence detection recognises it; the data terms live here.
+
+The dictionary data comes from three third-party projects, all under
+share-alike terms. Those terms propagate into derivative works, which includes
+any `dictionary.db` this project builds.
 
 | Source | Content | Licence | Attribution required |
 |---|---|---|---|
